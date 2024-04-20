@@ -1,9 +1,31 @@
 // This orginial code comes from Christian Clausen of Five Lines of Code
 
-enum TrafficLight {
+enum RawTrafficLight {
   RED,
   YELLOW,
   GREEN,
+}
+
+interface TrafficLight {
+  handleMotion(): void;
+}
+
+class Red implements TrafficLight {
+  handleMotion() {
+    car.stop();
+  }
+}
+
+class Yellow implements TrafficLight {
+  handleMotion() {
+    car.drive();
+  }
+}
+
+class Green implements TrafficLight {
+  handleMotion() {
+    car.drive();
+  }
 }
 
 const car = {
@@ -11,9 +33,8 @@ const car = {
   stop: () => console.log("Car is stopped"),
 };
 
-const CYCLE = [TrafficLight.RED, TrafficLight.GREEN, TrafficLight.YELLOW];
+const CYCLE = [new Red(), new Green(), new Yellow()];
 
 function updateCarForLight(current: TrafficLight) {
-  if (current === TrafficLight.RED) car.stop();
-  else car.drive();
+  current.handleMotion();
 }
